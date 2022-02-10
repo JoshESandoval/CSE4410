@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class BallControll : MonoBehaviour
 {
+    public bool GameOver = false;
     public Rigidbody2D ball;
     public float SpeedX = 0,
                  SpeedY = 0,
@@ -17,39 +18,28 @@ public class BallControll : MonoBehaviour
     
     void Update()
     {
-        ball.AddForce( new Vector2(SpeedX, SpeedY) , ForceMode2D.Force) ;
-        if(Input.GetKey(KeyCode.Space))
-            ball.AddForce( new Vector2(SpeedX, SpeedY) , ForceMode2D.Force) ;
-        if(Input.GetKey(KeyCode.A)){
-            gameObject.transform.position = new Vector3(0,0,0);
-            ball.velocity = Vector2.zero;
+        if(ball.velocity == Vector2.zero && !GameOver){
+            ball.velocity = new Vector2(SpeedX, 0);
+        }
+        if(GameOver){
+            if(Input.GetKey(KeyCode.Space)){
+                GameOver = false;
+            }
         }
 
     }
 
     private void OnCollisionEnter2D(Collision2D collider) {
-        SpeedX *= -1;
-        //print("it");
-        float Position = gameObject.transform.position.y - collider.gameObject.transform.position.y;
-        if(Position > 2){
-            SpeedY = MaxSpeedY;
-        }
-        else if(Position <= 0){
-            SpeedY = 0;
-        }
-        else{
-            SpeedY =  (SpeedY + (MaxSpeedY * Position))/2; 
-            print(SpeedY);
-        }
+        Vector2 velocity;
+        velocity.x = ball.velocity.x;
+        velocity.y = (ball.velocity.y/2) + (collider.gameObject.GetComponent<Rigidbody2D>().velocity.y /2);
+        ball.velocity = velocity;     
+    }
     
-        //print(Position);
-        
-    }
- 
-    private void OnTriggerEnter2D(Collider2D other) {
-        //print("Speed: " + SpeedY);
-        ball.velocity = ball.velocity * new Vector2( 1,-1);
-        //SpeedY *= -1;
 
+    private void OnTriggerEnter2D(Collider2D other) {
+        ball.velocity = ball.velocity * new Vector2( 1,-1);
+        SpeedY = -SpeedY;        
     }
+
 }
