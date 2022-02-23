@@ -83,7 +83,6 @@ public class BlockBuilder : MonoBehaviour
             for (int j = 0; j < 9; j++)
             {
                 Instantiate(brick, new Vector3(startx + width * i, starty - height * j, 0), Quaternion.identity);
-                //Instantiate()
             }
         }
       
