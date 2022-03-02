@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class ScoreHandler : MonoBehaviour
 {
     public int Lives = 3;
-    public int score;
     public Text text,
                 endText;
     public bool GameOver;
@@ -18,7 +17,7 @@ public class ScoreHandler : MonoBehaviour
     private void Update()
     {
         bricks = GameObject.FindGameObjectsWithTag("Bricks");
-        text.text = "Score: " + score +"\nLives: " + Lives;
+        text.text = "Lives: " + Lives;
         endText.text = "";
        
         if (bricks.Length == 0)

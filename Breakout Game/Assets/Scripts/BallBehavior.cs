@@ -59,6 +59,7 @@ public class BallBehavior : MonoBehaviour
         }
         if (collision.collider.CompareTag("Bricks"))
         {
+            gameObject.GetComponent<SpriteRenderer>().color = collision.gameObject.GetComponent<SpriteRenderer>().color;
             Destroy(collision.gameObject);
         }
     }
